@@ -1,0 +1,19 @@
+[authID] : {
+  	username : string,
+  	password : string,
+  	phoneNumber : string,
+  	email: string
+}
+
+[profileID] : {
+	authID : reference,
+	firstName : string,
+	lastName : string,
+  	profileImage: string,
+  	gender: string,
+  	dob: date,
+  	location: string,
+  	introduction: string,
+  	tag : [string],
+  	socialMedia q: [{name: string, account: string}]
+}

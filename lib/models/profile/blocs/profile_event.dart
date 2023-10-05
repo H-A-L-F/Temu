@@ -4,14 +4,14 @@ part of 'profile_bloc.dart';
 abstract class ProfileEvent {}
 
 class AddProfile extends ProfileEvent {
-  final Profile profile;
+  final Map<String, dynamic> profile;
 
   AddProfile({required this.profile});
 }
 
 class UpdateProfile extends ProfileEvent {
   final String profileID;
-  final Profile profile;
+  final Map<String, dynamic> profile;
 
   UpdateProfile({required this.profileID, required this.profile});
 }
