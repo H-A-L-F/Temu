@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "363539620453",
+    "project_id": "temu-4793d",
+    "storage_bucket": "temu-4793d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:363539620453:android:ac3a2062485fea9c2b9c8c",
+        "android_client_info": {
+          "package_name": "com.blaxmc.temu_app.temu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvL7sGd_6OZ0PcwurxzJUc_a-uGFMUZfU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
