@@ -1,0 +1,6 @@
+colors
+text : #161208
+background : #F1EADA
+primary : #8FD6C1
+secondary : #E9DEC3
+accent : #853DA4
