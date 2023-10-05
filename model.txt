@@ -15,5 +15,5 @@
   	location: string,
   	introduction: string,
   	tag : [string],
-  	socialMedia q: [{name: string, account: string}]
+  	socialMedia : [{name: string, account: string}]
 }
