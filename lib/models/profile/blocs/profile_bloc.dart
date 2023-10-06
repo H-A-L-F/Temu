@@ -13,27 +13,27 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   void _addProfile(AddProfile event, Emitter<ProfileState> emit) {
-    // get all operation}
+    // add profile
     emit(ProfileUpdated(profiles: state.profiles));
   }
 
   void _updateProfile(UpdateProfile event, Emitter<ProfileState> emit) {
-    // get all operation}
+    // update profile
     emit(ProfileUpdated(profiles: state.profiles));
   }
 
   void _deleteProfile(DeleteProfile event, Emitter<ProfileState> emit) {
-    // get all operation
+    // delete profile
     emit(ProfileUpdated(profiles: state.profiles));
   }
 
   void _getProfile(GetProfile event, Emitter<ProfileState> emit) {
-    // get all operation
+    // get a profile
     emit(ProfileUpdated(profiles: state.profiles));
   }
 
   void _getProfiles(GetProfiles event, Emitter<ProfileState> emit) {
-    // get all operation
+    // get all profile
     emit(ProfileUpdated(profiles: state.profiles));
   }
 }

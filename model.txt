@@ -1,19 +1,18 @@
 [authID] : {
-  	username : string,
+  	email: string,
   	password : string,
-  	phoneNumber : string,
-  	email: string
+  	phoneNumber : string?
 }
 
 [profileID] : {
 	authID : reference,
 	firstName : string,
 	lastName : string,
-  	profileImage: string,
+  	profileImage: string?,
   	gender: string,
   	dob: date,
   	location: string,
-  	introduction: string,
-  	tag : [string],
-  	socialMedia : [{name: string, account: string}]
+  	introduction: string?,
+  	tag : [string]?,
+  	socialMedia : [{name: string, account: string}]?
 }
