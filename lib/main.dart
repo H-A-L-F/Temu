@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:temu/const/app_color.dart';
 import 'package:temu/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:temu/screens/discover/discover_screen.dart';
+import 'package:temu/screens/home/home_screen.dart';
 import 'package:temu/screens/profile/profile_screen.dart';
 
 void main() async {
@@ -24,11 +26,23 @@ class ScreenBase extends StatefulWidget {
 class _ScreenBaseState extends State<ScreenBase> {
   int _selectedIndex = 0;
 
+  final List<Widget> _pages = const [
+    HomeScreen(),
+    DiscoverScreen(),
+    ProfileScreen()
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 75,
+        toolbarHeight: 60,
         centerTitle: true,
         title: Column(
           children: <Widget>[
@@ -45,16 +59,19 @@ class _ScreenBaseState extends State<ScreenBase> {
             const Text(
               'Temu',
               style: TextStyle(
-                  color: Color(
-                    AppColor.text,
-                  ),
-                  fontWeight: FontWeight.w500),
+                color: Color(
+                  AppColor.text,
+                ),
+                fontWeight: FontWeight.w400,
+                fontStyle: FontStyle.italic,
+                fontSize: 12,
+              ),
             )
           ],
         ),
         backgroundColor: const Color(AppColor.secondary),
       ),
-      body: const ProfileScreen(),
+      body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color(AppColor.secondary),
         items: const <BottomNavigationBarItem>[
@@ -83,6 +100,8 @@ class _ScreenBaseState extends State<ScreenBase> {
             label: 'Profile',
           ),
         ],
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
