@@ -7,7 +7,7 @@
 [profileID] : {
 	authID : reference,
 	firstName : string,
-	lastName : string,
+	lastName : string?,
   	profileImage: string?,
   	gender: string,
   	dob: date,
