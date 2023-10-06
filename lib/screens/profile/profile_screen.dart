@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:temu/const/app_color.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -12,16 +13,12 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Temu'),
-        actions: const [
-          Column(
-            children: <Widget>[Text('btn1'), Text('btn2')],
-          )
-        ],
+    return const Scaffold(
+      body: Padding(
+        padding: EdgeInsets.all(20),
+        child: Text("This is profile screen"),
       ),
-      body: const Text("The body"),
+      backgroundColor: Color(AppColor.background),
     );
   }
 }
