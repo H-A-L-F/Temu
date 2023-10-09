@@ -18,22 +18,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: EdgeInsets.all(20),
         child: Column(
           children: [
+            SizedBox(
+              height: 10,
+            ),
             Center(
               child: Text(
-                'Profilea',
+                'Profile',
                 style: TextStyle(
                   fontSize: 24,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
+            ),
+            SizedBox(
+              height: 20,
             ),
             Center(
               child: CircleAvatar(
                 backgroundImage: NetworkImage(
-                  'https://firebasestorage.googleapis.com/v0/b/temu-4793d.appspot.com/o/profile_images%2FWIN_20231006_23_37_51_Pro.jpg?alt=media&token=6c6ebce5-e989-4492-b869-fe80b23b3502&_gl=1*1y7snzi*_ga*MTY1Mzg0OTc4OS4xNjk2NDE3NjMy*_ga_CW55HF8NVT*MTY5NjYxMDA4NC4zLjEuMTY5NjYxMDMwMC41Ny4wLjA.',
+                  'https://firebasestorage.googleapis.com/v0/b/temu-4793d.appspot.com/o/profile_images%2FS__21184514.jpg?alt=media&token=d52768ee-b599-4be4-bad9-c31948d3e313&_gl=1*1iad3y3*_ga*MTc4Nzc0NDIwMC4xNjk2MjEwNTAz*_ga_CW55HF8NVT*MTY5NjgzNjc0Ni45LjEuMTY5NjgzNzAyMS4xOS4wLjA.',
                   scale: 1,
                 ),
-                radius: 100,
+                radius: 64,
               ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'FirstName',
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'LastName',
+                    ),
+                  ),
+                )
+              ],
             ),
           ],
         ),

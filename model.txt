@@ -8,11 +8,12 @@
 	authID : reference,
 	firstName : string,
 	lastName : string?,
-  	profileImage: string?,
-  	gender: string,
-  	dob: date,
-  	location: string,
-  	introduction: string?,
-  	tag : [string]?,
-  	socialMedia : [{name: string, account: string}]?
+	profileImage: string?,
+	role: string
+	gender: string,
+	dob: date,
+	location: string,
+	introduction: string?,
+	tag : [string]?,
+	socialMedia : [{name: string, account: string}]?
 }
