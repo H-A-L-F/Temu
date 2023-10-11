@@ -16,6 +16,7 @@ class SearchBody extends StatefulWidget {
 
 class _SearchBodyState extends State<SearchBody> {
   late InfluencerSearchBloc _bloc;
+  final double cardHeight = 100.0;
 
   @override
   void initState() {
@@ -24,18 +25,25 @@ class _SearchBodyState extends State<SearchBody> {
     _bloc.add(FetchInfluencers());
   }
 
+  String firstCharToUpper(String text) {
+    if (text.isEmpty) return text;
+    return text[0].toUpperCase() + text.substring(1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top: 40.0, left: 8.0, right: 8.0, bottom: 8.0),
             child: TextField(
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                   labelText: "Search",
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.search)
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  prefixIcon: const Icon(Icons.search)
               ),
               onChanged: (value) => _bloc.add(SearchQueryChanged(value)),
             ),
@@ -59,11 +67,39 @@ class _SearchBodyState extends State<SearchBody> {
                         itemCount: influencers.length,
                         itemBuilder: (context, index) {
                           final item = influencers[index];
-                          return Card(
-                            child: ListTile(
-                              leading: Image.network(item.imageUrl),
-                              title: Text(item.title),
-                              subtitle: Text(item.description),
+                          return Container(
+                            height: cardHeight,
+                            child: Card(
+                              shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.zero,
+                                  side: BorderSide.none
+                              ),
+                              color: Colors.white,
+                              elevation: 5.0,
+                              child: Row(
+                                children: [
+                                  AspectRatio(
+                                    aspectRatio: 1,
+                                    child: Image.network(
+                                      item.imageUrl,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(firstCharToUpper(item.title)),
+                                          Text(item.description),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         }

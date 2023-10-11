@@ -10,12 +10,33 @@ class InfluencerSearchBloc extends Bloc<SearchEvent, SearchState> {
   InfluencerSearchBloc() : super(SearchInitial()) {
     on<FetchInfluencers>((event, emit) async {
       List<Influencer> influencers = await _repository.fetchInfluencer();
+      influencers = influencers.map((inf) =>
+          Influencer(
+            title: inf.title.toLowerCase(),
+            imageUrl: inf.imageUrl,
+            description: inf.description,
+          )
+      ).toList();
       emit(InfluencersLoaded(influencers));
     });
 
-    on<SearchQueryChanged>((event, emit) {
-      List<Influencer> allInfluencers = (state as InfluencersLoaded).influencers;
-      final filteredInfluencers = allInfluencers.where((inf) => inf.title.contains(event.query)).toList();
+    on<SearchQueryChanged>((event, emit) async {
+      if (event.query == "") {
+        List<Influencer> influencers = await _repository.fetchInfluencer();
+        influencers = influencers.map((inf) =>
+            Influencer(
+              title: inf.title.toLowerCase(),
+              imageUrl: inf.imageUrl,
+              description: inf.description,
+            )
+        ).toList();
+        emit(InfluencersLoaded(influencers));
+        return;
+      }
+      List<Influencer> allInfluencers = (state is InfluencersLoaded) ?
+        (state as InfluencersLoaded).influencers :
+        (state as SearchResults).filteredInfluencer;
+      final filteredInfluencers = allInfluencers.where((inf) => inf.title.contains(event.query.toLowerCase())).toList();
       emit(SearchResults(filteredInfluencers));
     });
   }
