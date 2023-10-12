@@ -51,6 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: 'FirstName',
+                      label: Text('FirstName'),
                     ),
                   ),
                 ),
@@ -58,6 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: TextField(
                     decoration: InputDecoration(
                       hintText: 'LastName',
+                      label: Text('LastName'),
                     ),
                   ),
                 )
