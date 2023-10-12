@@ -15,5 +15,6 @@
 	location: string,
 	introduction: string?,
 	tag : [string]?,
-	socialMedia : [{name: string, account: string}]?
+	socialMedia : [{name: string, account: string}],
+	role: string
 }
