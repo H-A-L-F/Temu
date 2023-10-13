@@ -89,7 +89,7 @@ class _SearchBodyState extends State<SearchBody> with TickerProviderStateMixin {
           ClipRect(
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
-              height: !tagHave.isEmpty ? 40 : 0,
+              height: tagHave.isNotEmpty ? 40 : 0,
               child: Wrap(
                 direction: Axis.horizontal,
                 crossAxisAlignment: WrapCrossAlignment.start,
@@ -261,14 +261,20 @@ class _SearchBodyState extends State<SearchBody> with TickerProviderStateMixin {
                     List<Influencer> influencers = (state is InfluencersLoaded)
                         ? state.influencers
                         : (state as SearchResults).filteredInfluencer;
-                    if (influencers.isEmpty) {
+                    List<Influencer> filteredInfluencers = influencers;
+                    if (tagHave.isNotEmpty) {
+                      filteredInfluencers = influencers.where((inf) {
+                        return inf.tags.any((tag) => tagHave.contains(tag));
+                      }).toList();
+                    }
+                    if (filteredInfluencers.isEmpty) {
                       return const Center(child: Text("No results found"));
                     }
 
                     return ListView.builder(
-                        itemCount: influencers.length,
+                        itemCount: filteredInfluencers.length,
                         itemBuilder: (context, index) {
-                          final item = influencers[index];
+                          final item = filteredInfluencers[index];
                           return Container(
                             height: cardHeight,
                             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -299,7 +305,7 @@ class _SearchBodyState extends State<SearchBody> with TickerProviderStateMixin {
                                         children: [
                                           Text(
                                             firstCharToUpper(item.title),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 18.0, // Increase font size for title
                                             ),

@@ -12,6 +12,7 @@ class InfluencerSearchBloc extends Bloc<SearchEvent, SearchState> {
       List<Influencer> influencers = await _repository.fetchInfluencer();
       influencers = influencers.map((inf) =>
           Influencer(
+            tags: inf.tags,
             title: inf.title.toLowerCase(),
             imageUrl: inf.imageUrl,
             description: inf.description,
@@ -25,6 +26,7 @@ class InfluencerSearchBloc extends Bloc<SearchEvent, SearchState> {
         List<Influencer> influencers = await _repository.fetchInfluencer();
         influencers = influencers.map((inf) =>
             Influencer(
+              tags: inf.tags,
               title: inf.title.toLowerCase(),
               imageUrl: inf.imageUrl,
               description: inf.description,
