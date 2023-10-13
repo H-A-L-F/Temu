@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:temu/invite_influencer.dart';
 import 'package:temu/models/search/blocs/search_event.dart';
 import 'package:temu/models/search/influencer.dart';
 import 'package:temu/models/search/influencer_search_bloc.dart';
@@ -275,58 +276,65 @@ class _SearchBodyState extends State<SearchBody> with TickerProviderStateMixin {
                         itemCount: filteredInfluencers.length,
                         itemBuilder: (context, index) {
                           final item = filteredInfluencers[index];
-                          return Container(
-                            height: cardHeight,
-                            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                            child: Card(
-                              color: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0), // Rounded corners
-                              ),
-                              elevation: 5.0,
-                              child: Row(
-                                children: [
-                                  ClipRRect( // Clip the image with rounded corners
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    child: AspectRatio(
-                                      aspectRatio: 1,
-                                      child: Image.network(
-                                        item.imageUrl,
-                                        fit: BoxFit.cover,
+                          return GestureDetector(
+                            onTap: () => {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>  InviteInfluencer(influencer: item)
+                                  ))
+                            },
+                            child: Container(
+                              height: cardHeight,
+                              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                              child: Card(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0), // Rounded corners
+                                ),
+                                elevation: 5.0,
+                                child: Row(
+                                  children: [
+                                    ClipRRect( // Clip the image with rounded corners
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Image.network(
+                                          item.profileImage,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            firstCharToUpper(item.title),
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18.0, // Increase font size for title
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              firstCharToUpper(item.firstName),
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18.0, // Increase font size for title
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(height: 5.0), // Add some spacing between title and description
-                                          Text(
-                                            item.description,
-                                            style: TextStyle(
-                                              color: Colors.grey[600], // Use a muted color for description
+                                            SizedBox(height: 5.0), // Add some spacing between title and description
+                                            Text(
+                                              item.description,
+                                              style: TextStyle(
+                                                color: Colors.grey[600], // Use a muted color for description
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           );
-
-
                         }
                     );
                   }

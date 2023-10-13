@@ -13,9 +13,10 @@ class InfluencerSearchBloc extends Bloc<SearchEvent, SearchState> {
       influencers = influencers.map((inf) =>
           Influencer(
             tags: inf.tags,
-            title: inf.title.toLowerCase(),
-            imageUrl: inf.imageUrl,
+            firstName: inf.firstName.toLowerCase(),
+            profileImage: inf.profileImage,
             description: inf.description,
+            lastName: inf.lastName,
           )
       ).toList();
       emit(InfluencersLoaded(influencers));
@@ -27,9 +28,10 @@ class InfluencerSearchBloc extends Bloc<SearchEvent, SearchState> {
         influencers = influencers.map((inf) =>
             Influencer(
               tags: inf.tags,
-              title: inf.title.toLowerCase(),
-              imageUrl: inf.imageUrl,
+              firstName: inf.firstName.toLowerCase(),
+              profileImage: inf.profileImage,
               description: inf.description,
+              lastName: inf.lastName
             )
         ).toList();
         emit(InfluencersLoaded(influencers));
@@ -38,7 +40,7 @@ class InfluencerSearchBloc extends Bloc<SearchEvent, SearchState> {
       List<Influencer> allInfluencers = (state is InfluencersLoaded) ?
         (state as InfluencersLoaded).influencers :
         (state as SearchResults).filteredInfluencer;
-      final filteredInfluencers = allInfluencers.where((inf) => inf.title.contains(event.query.toLowerCase())).toList();
+      final filteredInfluencers = allInfluencers.where((inf) => inf.firstName.contains(event.query.toLowerCase())).toList();
       emit(SearchResults(filteredInfluencers));
     });
   }

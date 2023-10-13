@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76daccb4-d09b-4696-8210-dac8802136e2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/invite_influencer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/models/search/influencer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/search/influencer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/models/search/influencer_search_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/search/influencer_search_bloc.dart" afterDir="false" />
