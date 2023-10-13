@@ -17,6 +17,7 @@ class SearchBody extends StatefulWidget {
 class _SearchBodyState extends State<SearchBody> {
   late InfluencerSearchBloc _bloc;
   final double cardHeight = 100.0;
+  bool isExpanded = false;
 
   @override
   void initState() {
@@ -40,12 +41,109 @@ class _SearchBodyState extends State<SearchBody> {
             child: TextField(
               decoration: InputDecoration(
                   labelText: "Search",
-                  border: OutlineInputBorder(
+                  hintText: "Search for Influencers...",
+                  hintStyle: TextStyle(color: Colors.grey[400]),
+                  fillColor: Colors.white,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
+                    borderSide: BorderSide(color: Colors.transparent)
                   ),
-                  prefixIcon: const Icon(Icons.search)
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    borderSide: BorderSide(color: Colors.transparent)
+                  ),
+                  prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  labelStyle: TextStyle(color: Colors.grey[600]),
               ),
               onChanged: (value) => _bloc.add(SearchQueryChanged(value)),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                isExpanded = !isExpanded;
+              });
+            },
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              child: const Row(
+                children: [
+                  Icon(Icons.filter_list,),
+                  SizedBox(width: 10),
+                  Expanded(child: Text("Filter Influencer"))
+                ],
+              ),
+            ),
+          ),
+          ClipRect(
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 200),
+              height: isExpanded ? MediaQuery.of(context).size.height - 150 : 0,  // Adjust the height as needed
+              child: Wrap(
+                direction: Axis.horizontal,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                children: [
+                  GestureDetector(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Color(0xDFDFDFDFDF),
+                          borderRadius: BorderRadius.circular(15.0)
+                      ),
+                      padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
+                      margin: const EdgeInsets.only(top: 40.0, left: 16.0, right: 8.0, bottom: 8.0),
+                      child: const Text("Funny"),
+                    ),
+                  ),
+                  GestureDetector(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Color(0xDFDFDFDFDF),
+                          borderRadius: BorderRadius.circular(15.0)
+                      ),
+                      padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
+                      margin: const EdgeInsets.only(top: 40.0, left: 16.0, right: 8.0, bottom: 8.0),
+                      child: const Text("Creative"),
+                    ),
+                  ),
+                  GestureDetector(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Color(0xDFDFDFDFDF),
+                          borderRadius: BorderRadius.circular(15.0)
+                      ),
+                      padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
+                      margin: const EdgeInsets.only(top: 40.0, left: 16.0, right: 8.0, bottom: 8.0),
+                      child: Text("Travel"),
+                    ),
+                  ),
+                  GestureDetector(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Color(0xDFDFDFDFDF),
+                          borderRadius: BorderRadius.circular(15.0)
+                      ),
+                      padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
+                      margin: const EdgeInsets.only(top: 40.0, left: 16.0, right: 8.0, bottom: 8.0),
+                      child: Text("Gym"),
+                    ),
+                  ),
+                  GestureDetector(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Color(0xDFDFDFDFDF),
+                          borderRadius: BorderRadius.circular(15.0)
+                      ),
+                      padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
+                      margin: const EdgeInsets.only(top: 40.0, left: 16.0, right: 8.0, bottom: 8.0),
+                      child: Text("Food"),
+                    ),
+                  )
+
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -69,20 +167,23 @@ class _SearchBodyState extends State<SearchBody> {
                           final item = influencers[index];
                           return Container(
                             height: cardHeight,
+                            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                             child: Card(
-                              shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
-                                  side: BorderSide.none
-                              ),
                               color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0), // Rounded corners
+                              ),
                               elevation: 5.0,
                               child: Row(
                                 children: [
-                                  AspectRatio(
-                                    aspectRatio: 1,
-                                    child: Image.network(
-                                      item.imageUrl,
-                                      fit: BoxFit.cover,
+                                  ClipRRect( // Clip the image with rounded corners
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: AspectRatio(
+                                      aspectRatio: 1,
+                                      child: Image.network(
+                                        item.imageUrl,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                   Expanded(
@@ -92,8 +193,20 @@ class _SearchBodyState extends State<SearchBody> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Text(firstCharToUpper(item.title)),
-                                          Text(item.description),
+                                          Text(
+                                            firstCharToUpper(item.title),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18.0, // Increase font size for title
+                                            ),
+                                          ),
+                                          SizedBox(height: 5.0), // Add some spacing between title and description
+                                          Text(
+                                            item.description,
+                                            style: TextStyle(
+                                              color: Colors.grey[600], // Use a muted color for description
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -102,6 +215,8 @@ class _SearchBodyState extends State<SearchBody> {
                               ),
                             ),
                           );
+
+
                         }
                     );
                   }
