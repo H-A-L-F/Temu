@@ -14,16 +14,24 @@ class SearchBody extends StatefulWidget {
   _SearchBodyState createState() => _SearchBodyState();
 }
 
-class _SearchBodyState extends State<SearchBody> {
+class _SearchBodyState extends State<SearchBody> with TickerProviderStateMixin {
   late InfluencerSearchBloc _bloc;
   final double cardHeight = 100.0;
   bool isExpanded = false;
+  List<String> tagHave = [];
+  Map<String, AnimationController> tagControllers = {};
 
   @override
   void initState() {
     super.initState();
     _bloc = InfluencerSearchBloc();
     _bloc.add(FetchInfluencers());
+  }
+
+  @override
+  void dispose() {
+    tagControllers.values.forEach((controller) => controller.dispose());
+    super.dispose();
   }
 
   String firstCharToUpper(String text) {
@@ -47,14 +55,14 @@ class _SearchBodyState extends State<SearchBody> {
                   filled: true,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
-                    borderSide: BorderSide(color: Colors.transparent)
+                    borderSide: const BorderSide(color: Colors.transparent)
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
-                    borderSide: BorderSide(color: Colors.transparent)
+                    borderSide: const BorderSide(color: Colors.transparent)
                   ),
                   prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   labelStyle: TextStyle(color: Colors.grey[600]),
               ),
@@ -80,16 +88,68 @@ class _SearchBodyState extends State<SearchBody> {
           ),
           ClipRect(
             child: AnimatedContainer(
-              duration: Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 200),
+              height: !tagHave.isEmpty ? 40 : 0,
+              child: Wrap(
+                direction: Axis.horizontal,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                children: tagHave.map((tag) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        AnimationController? controller = tagControllers[tag];
+                        if (controller != null) {
+                          controller.reverse().then((_) {
+                            tagHave.remove(tag);
+                            controller.dispose();
+                            tagControllers.remove(tag);
+                          });
+                        } else {
+                          // If for some reason the controller is null, just remove the tag without animation
+                          tagHave.remove(tag);
+                        }
+                      });
+                    },
+                    child: ScaleTransition(
+                      scale: tagControllers[tag]?.drive(Tween(begin: 0.0, end: 1.0)) ?? AlwaysStoppedAnimation(1.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: const Color(0xDFDFDFDFDF),
+                            borderRadius: BorderRadius.circular(15.0)
+                        ),
+                        padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
+                        margin: const EdgeInsets.only(top: 10.0, left: 16.0, right: 8.0, bottom: 1.0),
+                        child: Text(tag),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+          ClipRect(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
               height: isExpanded ? MediaQuery.of(context).size.height - 150 : 0,  // Adjust the height as needed
               child: Wrap(
                 direction: Axis.horizontal,
                 crossAxisAlignment: WrapCrossAlignment.start,
                 children: [
                   GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (!tagControllers.containsKey("Funny")) {
+                          tagControllers["Funny"] = AnimationController(
+                            duration: const Duration(milliseconds: 300),
+                            vsync: this,
+                          )..forward();
+                        }
+                        tagHave.add("Funny");
+                      });
+                    },
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Color(0xDFDFDFDFDF),
+                          color: const Color(0xDFDFDFDFDF),
                           borderRadius: BorderRadius.circular(15.0)
                       ),
                       padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
@@ -98,9 +158,20 @@ class _SearchBodyState extends State<SearchBody> {
                     ),
                   ),
                   GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (!tagControllers.containsKey("Creative")) {
+                          tagControllers["Creative"] = AnimationController(
+                            duration: const Duration(milliseconds: 300),
+                            vsync: this,
+                          )..forward();
+                        }
+                        tagHave.add("Creative");
+                      });
+                    },
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Color(0xDFDFDFDFDF),
+                          color: const Color(0xDFDFDFDFDF),
                           borderRadius: BorderRadius.circular(15.0)
                       ),
                       padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
@@ -109,6 +180,17 @@ class _SearchBodyState extends State<SearchBody> {
                     ),
                   ),
                   GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (!tagControllers.containsKey("Travel")) {
+                          tagControllers["Travel"] = AnimationController(
+                            duration: const Duration(milliseconds: 300),
+                            vsync: this,
+                          )..forward();
+                        }
+                        tagHave.add("Travel");
+                      });
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                           color: Color(0xDFDFDFDFDF),
@@ -116,29 +198,51 @@ class _SearchBodyState extends State<SearchBody> {
                       ),
                       padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
                       margin: const EdgeInsets.only(top: 40.0, left: 16.0, right: 8.0, bottom: 8.0),
-                      child: Text("Travel"),
+                      child: const Text("Travel"),
                     ),
                   ),
                   GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (!tagControllers.containsKey("Gym")) {
+                          tagControllers["Gym"] = AnimationController(
+                            duration: const Duration(milliseconds: 300),
+                            vsync: this,
+                          )..forward();
+                        }
+                        tagHave.add("Gym");
+                      });
+                    },
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Color(0xDFDFDFDFDF),
+                          color: const Color(0xDFDFDFDFDF),
                           borderRadius: BorderRadius.circular(15.0)
                       ),
                       padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
                       margin: const EdgeInsets.only(top: 40.0, left: 16.0, right: 8.0, bottom: 8.0),
-                      child: Text("Gym"),
+                      child: const Text("Gym"),
                     ),
                   ),
                   GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (!tagControllers.containsKey("Food")) {
+                          tagControllers["Food"] = AnimationController(
+                            duration: const Duration(milliseconds: 300),
+                            vsync: this,
+                          )..forward();
+                        }
+                        tagHave.add("Food");
+                      });
+                    },
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Color(0xDFDFDFDFDF),
+                          color: const Color(0xDFDFDFDFDF),
                           borderRadius: BorderRadius.circular(15.0)
                       ),
                       padding: const EdgeInsets.only(top: 5, bottom: 5, left: 10, right: 10),
                       margin: const EdgeInsets.only(top: 40.0, left: 16.0, right: 8.0, bottom: 8.0),
-                      child: Text("Food"),
+                      child: const Text("Food"),
                     ),
                   )
 
