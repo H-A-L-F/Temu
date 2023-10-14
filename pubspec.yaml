@@ -30,6 +30,7 @@ environment:
 dependencies:
   cloud_firestore:
   flutter_bloc: ^8.1.1
+  flutter_svg: ^0.22.0
   flutter:
     sdk: flutter
 
@@ -63,6 +64,12 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - lib/assets/temu_app_logo.png
+    - lib/assets/default-icon.svg
+    - lib/assets/fb-icon.svg
+    - lib/assets/ig-icon.svg
+    - lib/assets/tt-icon.svg
+    - lib/assets/twt-icon.svg
+    - lib/assets/yt-icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

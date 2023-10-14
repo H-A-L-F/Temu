@@ -2,7 +2,7 @@ class SocialMedia {
   final String name;
   final String account;
 
-  SocialMedia({
+  const SocialMedia({
     required this.name,
     required this.account,
   });
@@ -28,7 +28,7 @@ class Profile {
   final List<SocialMedia> socialMedia;
   final String role;
 
-  Profile({
+  const Profile({
     required this.authID,
     required this.firstName,
     this.lastName,
